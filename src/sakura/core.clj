@@ -3,7 +3,12 @@
 (defrecord Node [value children])
 
 (defn mk-tree
-  [nested-list] nested-list)
+  "Recursively transform nested vectors into Node instances"
+  [node]
+  (if (sequential? node)
+    (let [[value & children] node]
+      (Node. value (map mk-tree children)))
+    (Node. node [])))
 
 ;;; Some trees to play with
 
@@ -54,7 +59,5 @@
                Self ; <-- You are Here
                Brother
                Sister]]]))
-
-
 
 (defn -main [])
